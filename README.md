@@ -1,2 +1,2 @@
 # workgroup
-\[Week 45 Exercises](/week45_exercises.md)
+[Week 45 Exercises](/week45_exercises.md)
