@@ -14,6 +14,10 @@ public class LexiconVendingMachine implements VendingMachine {
 
     public LexiconVendingMachine() {
         products = new ArrayList<>();
+        // Pre-stocking the machine as per the scenario example
+        products.add(new Snack(1, "Chips", 15, 5, 130));
+        products.add(new Beverage(2, "Cola", 20, 3, 330));
+        products.add(new Fruit(3, "Apple", 10, 8, "Sweden"));
         balance = 0;
     }
 
@@ -29,19 +33,19 @@ public class LexiconVendingMachine implements VendingMachine {
     }
 
     @Override
-    public Product selectProduct(int id) {
+    public Product selectProduct(int id) throws VendingException{
 
         for (Product product : products) {
 
             if (product.getId() == id) {
 
                 if (product.getQuantity() <= 0) {
-                    throw new IllegalStateException(
+                    throw new VendingException(
                             "Product is out of stock");
                 }
 
                 if (balance < product.getPrice()) {
-                    throw new IllegalStateException(
+                    throw new VendingException(
                             "Insufficient balance");
                 }
 
@@ -52,7 +56,7 @@ public class LexiconVendingMachine implements VendingMachine {
             }
         }
 
-        throw new IllegalArgumentException(
+        throw new VendingException(
                 "Product not found");
     }
 

@@ -4,7 +4,7 @@ import java.util.List;
 public interface VendingMachine {
 
     boolean insertCoin(int amount);
-    Product selectProduct(int id);
+    Product selectProduct(int id) throws VendingException;
     int returnChange();
     int getBalance();
     List<Product> getProducts();
