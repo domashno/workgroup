@@ -14,7 +14,7 @@ public class VendingMachineUI {
 
 		boolean running = true;
 		while (running) {
-			System.out.print("\n> ");
+			System.out.print("\nOptions: [i]nsert coin, [s]elect product, [r]eturn change, [m]enu, [e]xit\n> ");
 			String input = scanner.nextLine().trim().toLowerCase();
 
 			if (input.isEmpty()) {
@@ -23,10 +23,10 @@ public class VendingMachineUI {
 
 			switch (input) {
 				case "i", "insert" -> handleInsert(machine, scanner);
-				case "1", "select" -> handleSelect(machine, scanner);
-				case "2", "return" -> handleReturn(machine);
-				case "3", "menu"   -> displayMenu(machine);
-				case "4", "exit"   -> {
+				case "s", "select" -> handleSelect(machine, scanner);
+				case "r", "return" -> handleReturn(machine);
+				case "m", "menu"   -> displayMenu(machine);
+				case "e", "exit"   -> {
 					int change = machine.returnChange();
 					if (change > 0) {
 						System.out.println("Change returned: " + change + " kr");
