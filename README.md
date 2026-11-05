@@ -4,4 +4,4 @@ A dedicated repository for archiving coding workshops, hands-on tutorials, and p
 [Week 45 Exercise 1 Lexicon Bank App](/Lexicon%20Bank)  
 [Week 45 Exercises 2&3&4](/week45_exercises.md)  
 [Week 45 Lexicon Vending Machine App](/VendingMachine)  
-[Week 45 Workshop Report](/week_45_workshop_report.md) 
+[Week 45 Workshop Report](/week_45_workshop_report.md) (Ezhilarasi Ramachandiran)  
