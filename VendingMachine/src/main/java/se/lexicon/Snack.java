@@ -6,7 +6,7 @@ public class Snack extends Product{
     //Constructor
 
     public Snack(int id, String name, int price, int quantity, int weightGrams) {
-        super(id,name.price,quantity);
+        super(id,name,price,quantity);
         this.weightGrams = weightGrams;
     }
 
