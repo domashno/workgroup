@@ -1,6 +1,6 @@
 package se.lexicon;
 
-public class fruit extends Product{
+public class Fruit extends Product{
 
     private String origin;
     //constructor
