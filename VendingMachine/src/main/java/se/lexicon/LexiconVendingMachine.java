@@ -10,7 +10,7 @@ public class LexiconVendingMachine implements VendingMachine {
     private int balance;
 
     private static final List<Integer> VALID_COINS =
-            List.of(1, 2, 5, 10);
+            List.of(1, 2, 5, 10, 20, 50);
 
     public LexiconVendingMachine() {
         products = new ArrayList<>();
