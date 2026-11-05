@@ -80,10 +80,10 @@ public class VendingMachineUI {
 			System.out.println("Dispensing: " + product.getName()
 					+ " (" + product.getDescription() + ")");
 
-			int change = machine.returnChange();
+			/*int change = machine.returnChange();
 			if (change > 0) {
 				System.out.println("Change returned: " + change + " kr");
-			}
+			}*/
 			System.out.println("Balance: " + machine.getBalance() + " kr");
 		} catch (VendingException e) {
 			System.out.println(e.getMessage());
