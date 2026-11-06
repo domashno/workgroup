@@ -7,6 +7,7 @@ import java.util.List;
 public class LexiconVendingMachine implements VendingMachine {
 
     private final List<Product> products;
+    private List<Product> purchasedHistory = new ArrayList<>();
     private int balance;
 
     private static final List<Integer> VALID_COINS =
@@ -51,6 +52,7 @@ public class LexiconVendingMachine implements VendingMachine {
 
                 balance -= product.getPrice();
                 product.reduceStock();
+                purchasedHistory.add(product);
 
                 return product;
             }
@@ -58,6 +60,10 @@ public class LexiconVendingMachine implements VendingMachine {
 
         throw new VendingException(
                 "Product not found");
+    }
+    @Override
+    public List<Product> getPurchasedHistory(){
+        return new ArrayList<>(purchasedHistory);
     }
 
     @Override
