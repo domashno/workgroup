@@ -8,4 +8,5 @@ public interface VendingMachine {
     int returnChange();
     int getBalance();
     List<Product> getProducts();
+     List<Product> getPurchasedHistory();
 }

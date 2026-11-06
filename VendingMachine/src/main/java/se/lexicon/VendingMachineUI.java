@@ -14,7 +14,7 @@ public class VendingMachineUI {
 
 		boolean running = true;
 		while (running) {
-			System.out.print("\nOptions: [i]nsert coin, [s]elect product, [r]eturn change, [m]enu, [e]xit\n> ");
+			System.out.print("\nOptions: [i]nsert coin, [s]elect product, [r]eturn change, [m]enu, [h]istory, [e]xit\n> ");
 			String input = scanner.nextLine().trim().toLowerCase();
 
 			if (input.isEmpty()) {
@@ -26,6 +26,7 @@ public class VendingMachineUI {
 				case "s", "select" -> handleSelect(machine, scanner);
 				case "r", "return" -> handleReturn(machine);
 				case "m", "menu"   -> displayMenu(machine);
+				case "h",  "history"-> showPurchaseHistory(machine);
 				case "e", "exit"   -> {
 					int change = machine.returnChange();
 					if (change > 0) {
@@ -111,4 +112,30 @@ public class VendingMachineUI {
 		System.out.println("------------------------------------");
 		System.out.println("Balance: " + machine.getBalance() + " kr");
 	}
+
+	private static void showPurchaseHistory(VendingMachine machine) {
+
+		List<Product> history = machine.getPurchasedHistory();
+
+		if (history.isEmpty()) {
+			System.out.println("No purchases made yet.");
+			return;
+		}
+
+		int total = 0;
+
+		System.out.println("===== PURCHASE HISTORY =====");
+
+		for (Product product : history) {
+			System.out.println(product.getName()
+					+ " - " + product.getPrice() + " SEK");
+
+			total += product.getPrice();
+		}
+
+		System.out.println("Total spent: " + total + " SEK");
+		System.out.println("Change available: " + machine.getBalance() + " SEK");
+
+	}
 }
+
