@@ -136,4 +136,49 @@ public class VendingMachineTest {
 		assertNotNull(productList);
 		assertEquals(3, productList.size());
 	}
+
+	@Test
+	@DisplayName("Admin restocks product successfully")
+	public void testRestockProduct() throws VendingException {
+
+		Product cola = machine.getProducts()
+				.stream()
+				.filter(p -> p.getId() == 2)
+				.findFirst()
+				.orElseThrow();
+
+		assertEquals(3, cola.getQuantity());
+
+		machine.restockProduct(2, 5);
+
+		assertEquals(8, cola.getQuantity());
+	}
+
+	@Test
+	@DisplayName("Restock fails with invalid quantity")
+	public void testInvalidRestockQuantity() {
+
+		VendingException exception = assertThrows(
+				VendingException.class,
+				() -> machine.restockProduct(2, 0)
+		);
+
+		assertTrue(
+				exception.getMessage().contains("positive")
+		);
+	}
+
+	@Test
+	@DisplayName("Restock fails with invalid product ID")
+	public void testRestockInvalidProduct() {
+
+		VendingException exception = assertThrows(
+				VendingException.class,
+				() -> machine.restockProduct(99, 5)
+		);
+
+		assertTrue(
+				exception.getMessage().contains("not found")
+		);
+	}
 }

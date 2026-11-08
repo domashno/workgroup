@@ -84,4 +84,23 @@ public class LexiconVendingMachine implements VendingMachine {
     public List<Product> getProducts() {
         return List.copyOf(products);
     }
+
+    @Override
+    public void restockProduct(int id, int amount)
+            throws VendingException {
+
+        if (amount <= 0) {
+            throw new VendingException("Restock amount must be positive");
+        }
+
+        for (Product product : products) {
+            if (product.getId() == id) {
+                product.restock(amount);
+
+                return;
+            }
+        }
+
+        throw new VendingException("Product not found");
+    }
 }
