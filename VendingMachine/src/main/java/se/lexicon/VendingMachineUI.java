@@ -161,7 +161,8 @@ public class VendingMachineUI {
 			System.out.println("\n===== ADMIN PANEL =====");
 			System.out.println("1. Restock product");
 			System.out.println("2. View products");
-			System.out.println("3. Admin exit");
+			System.out.println("3. View low-stock products");
+			System.out.println("4. Admin exit");
 			System.out.print("\nChoose option: ");
 
 			String choice = scanner.nextLine().trim();
@@ -190,7 +191,9 @@ public class VendingMachineUI {
 
 				case "2" -> displayAdminProducts(machine);
 
-				case "3" -> {
+				case "3" -> displayLowStockProducts(machine);
+
+				case "4" -> {
 					System.out.println("Admin logged out.");
 					adminRunning = false;
 				}
@@ -211,7 +214,32 @@ public class VendingMachineUI {
 					p.getDescription(), p.getQuantity());
 		}
 
-		System.out.println("------------------------------------\n");
+		System.out.println("------------------------------------");
 	}
+
+	private static void displayLowStockProducts(VendingMachine machine) {
+
+		List<Product> lowStockProducts = machine.getLowStockProducts();
+
+		System.out.println("\n===== LOW STOCK ALERT =====");
+
+		if (lowStockProducts.isEmpty()) {
+			System.out.println("All products are sufficiently stocked!");
+			return;
+		}
+
+		System.out.println("WARNING: The following products have low stock!");
+
+		for (Product product : lowStockProducts) {
+
+			System.out.printf("[%d] %-12s - Stock: %d%n",
+					product.getId(),
+					product.getName(),
+					product.getQuantity());
+		}
+
+		System.out.println("===========================\n");
+	}
+
 }
 
