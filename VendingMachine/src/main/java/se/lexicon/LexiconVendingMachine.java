@@ -6,6 +6,7 @@ import java.util.List;
 
 public class LexiconVendingMachine implements VendingMachine {
 
+    private static final int LOW_STOCK_THRESHOLD = 3;
     private final List<Product> products;
     private List<Product> purchasedHistory = new ArrayList<>();
     private int balance;
@@ -83,5 +84,39 @@ public class LexiconVendingMachine implements VendingMachine {
     @Override
     public List<Product> getProducts() {
         return List.copyOf(products);
+    }
+
+    @Override
+    public List<Product> getLowStockProducts() {
+
+        List<Product> lowStockProducts = new ArrayList<>();
+
+        for (Product product : products) {
+
+            if (product.getQuantity() < LOW_STOCK_THRESHOLD) {
+                lowStockProducts.add(product);
+            }
+        }
+
+        return lowStockProducts;
+    }
+
+    @Override
+    public void restockProduct(int id, int amount)
+            throws VendingException {
+
+        if (amount <= 0) {
+            throw new VendingException("Restock amount must be positive");
+        }
+
+        for (Product product : products) {
+            if (product.getId() == id) {
+                product.restock(amount);
+
+                return;
+            }
+        }
+
+        throw new VendingException("Product not found");
     }
 }

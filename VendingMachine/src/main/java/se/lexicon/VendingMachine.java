@@ -8,5 +8,7 @@ public interface VendingMachine {
     int returnChange();
     int getBalance();
     List<Product> getProducts();
-     List<Product> getPurchasedHistory();
+    List<Product> getPurchasedHistory();
+    List<Product> getLowStockProducts();
+    void restockProduct(int id, int amount) throws VendingException;
 }

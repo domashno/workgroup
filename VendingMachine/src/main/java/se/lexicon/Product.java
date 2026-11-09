@@ -62,4 +62,12 @@ public abstract class Product {
 
     // Abstract method
     public abstract String getDescription();
+
+    public void restock(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Restock amount must be positive");
+        }
+
+        quantity += amount;
+    }
 }

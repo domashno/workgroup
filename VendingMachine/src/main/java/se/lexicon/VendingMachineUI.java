@@ -14,7 +14,12 @@ public class VendingMachineUI {
 
 		boolean running = true;
 		while (running) {
-			System.out.print("\nOptions: [i]nsert coin, [s]elect product, [r]eturn change, [m]enu, [h]istory, [e]xit\n> ");
+			System.out.print(
+					"\nOptions: [i]nsert coin, [s]elect product, " +
+							"[r]eturn change, [m]enu, [h]istory, " +
+							"[a]dmin, [e]xit\n> "
+			);
+
 			String input = scanner.nextLine().trim().toLowerCase();
 
 			if (input.isEmpty()) {
@@ -27,6 +32,7 @@ public class VendingMachineUI {
 				case "r", "return" -> handleReturn(machine);
 				case "m", "menu"   -> displayMenu(machine);
 				case "h",  "history"-> showPurchaseHistory(machine);
+				case "a", "admin" -> handleAdmin(machine, scanner);
 				case "e", "exit"   -> {
 					int change = machine.returnChange();
 					if (change > 0) {
@@ -137,5 +143,103 @@ public class VendingMachineUI {
 		System.out.println("Change available: " + machine.getBalance() + " SEK");
 
 	}
+
+	private static void handleAdmin(VendingMachine machine, Scanner scanner) {
+		Admin admin = new Admin();
+
+		System.out.print("Enter Admin PIN: ");
+		String pin = scanner.nextLine().trim();
+
+		if (!admin.login(pin)) {
+			System.out.println("Access denied!");
+			return;
+		}
+
+		boolean adminRunning = true;
+
+		while (adminRunning) {
+			System.out.println("\n===== ADMIN PANEL =====");
+			System.out.println("1. Restock product");
+			System.out.println("2. View products");
+			System.out.println("3. View low-stock products");
+			System.out.println("4. Admin exit");
+			System.out.print("\nChoose option: ");
+
+			String choice = scanner.nextLine().trim();
+
+			switch (choice) {
+				case "1" -> {
+					displayAdminProducts(machine);
+
+					try {
+						System.out.print("Enter product ID: ");
+						int id = Integer.parseInt(scanner.nextLine().trim());
+
+						System.out.print("Enter restock quantity: ");
+						int amount = Integer.parseInt(scanner.nextLine().trim());
+
+						machine.restockProduct(id, amount);
+
+						System.out.println("Product restocked successfully!");
+
+					} catch (NumberFormatException e) {
+						System.out.println("Invalid number.");
+					} catch (VendingException e) {
+						System.out.println(e.getMessage());
+					}
+				}
+
+				case "2" -> displayAdminProducts(machine);
+
+				case "3" -> displayLowStockProducts(machine);
+
+				case "4" -> {
+					System.out.println("Admin logged out.");
+					adminRunning = false;
+				}
+
+				default -> System.out.println("Invalid admin option.");
+			}
+		}
+	}
+
+	private static void displayAdminProducts(VendingMachine machine) {
+		System.out.println("\n-----------Products in stock-----------");
+
+		List<Product> products = machine.getProducts();
+
+		for (Product p : products) {
+			System.out.printf("[%d] %-12s - %2d kr  (%-20s) Stock: %d%n",
+					p.getId(), p.getName(), p.getPrice(),
+					p.getDescription(), p.getQuantity());
+		}
+
+		System.out.println("------------------------------------");
+	}
+
+	private static void displayLowStockProducts(VendingMachine machine) {
+
+		List<Product> lowStockProducts = machine.getLowStockProducts();
+
+		System.out.println("\n===== LOW STOCK ALERT =====");
+
+		if (lowStockProducts.isEmpty()) {
+			System.out.println("All products are sufficiently stocked!");
+			return;
+		}
+
+		System.out.println("WARNING: The following products have low stock!");
+
+		for (Product product : lowStockProducts) {
+
+			System.out.printf("[%d] %-12s - Stock: %d%n",
+					product.getId(),
+					product.getName(),
+					product.getQuantity());
+		}
+
+		System.out.println("===========================\n");
+	}
+
 }
 

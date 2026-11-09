@@ -136,4 +136,90 @@ public class VendingMachineTest {
 		assertNotNull(productList);
 		assertEquals(3, productList.size());
 	}
+
+	@Test
+	@DisplayName("Admin restocks product successfully")
+	public void testRestockProduct() throws VendingException {
+
+		Product cola = machine.getProducts()
+				.stream()
+				.filter(p -> p.getId() == 2)
+				.findFirst()
+				.orElseThrow();
+
+		assertEquals(3, cola.getQuantity());
+
+		machine.restockProduct(2, 5);
+
+		assertEquals(8, cola.getQuantity());
+	}
+
+	@Test
+	@DisplayName("Restock fails with invalid quantity")
+	public void testInvalidRestockQuantity() {
+
+		VendingException exception = assertThrows(
+				VendingException.class,
+				() -> machine.restockProduct(2, 0)
+		);
+
+		assertTrue(
+				exception.getMessage().contains("positive")
+		);
+	}
+
+	@Test
+	@DisplayName("Restock fails with invalid product ID")
+	public void testRestockInvalidProduct() {
+
+		VendingException exception = assertThrows(
+				VendingException.class,
+				() -> machine.restockProduct(99, 5)
+		);
+
+		assertTrue(
+				exception.getMessage().contains("not found")
+		);
+	}
+
+	@Test
+	@DisplayName("Detect products with low stock")
+	public void testLowStockProducts() throws VendingException {
+
+		// Reduce Cola stock from 3 to 2
+		machine.insertCoin(20);
+		machine.selectProduct(2);
+
+		List<Product> lowStock = machine.getLowStockProducts();
+
+		assertEquals(1, lowStock.size());
+		assertEquals("Cola", lowStock.get(0).getName());
+	}
+
+	@Test
+	@DisplayName("No products have low stock")
+	public void testNoLowStockProducts() {
+
+		List<Product> lowStock = machine.getLowStockProducts();
+
+		assertTrue(lowStock.isEmpty());
+	}
+
+	@Test
+	@DisplayName("Out-of-stock products appear in low-stock list")
+	public void testOutOfStockProducts() throws VendingException {
+
+		machine.insertCoin(50);
+		machine.insertCoin(10);
+
+		machine.selectProduct(2);
+		machine.selectProduct(2);
+		machine.selectProduct(2);
+
+		List<Product> lowStock = machine.getLowStockProducts();
+
+		assertTrue(
+				lowStock.stream().anyMatch(p -> p.getId() == 2)
+		);
+	}
 }
