@@ -1,0 +1,96 @@
+package se.lexicon;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
+public class Main {
+
+	@FunctionalInterface
+	interface PersonRule {
+		boolean test(Person person);
+	}
+
+	@FunctionalInterface
+	interface PersonAction {
+		void execute(Person person);
+	}
+
+	public static List<Person> filterPeople(List<Person> list, PersonRule rule) {
+		List<Person> result = new ArrayList<>();
+		for (Person p : list) {
+			if (rule.test(p)) {
+				result.add(p);
+			}
+		}
+		return result;
+	}
+
+	static class PersonProcessor {
+		public static List<Person> findPeople(List<Person> list, Predicate<Person> rule) {
+			List<Person> result = new ArrayList<>();
+			for (Person p : list) {
+				if (rule.test(p)) {
+					result.add(p);
+				}
+			}
+			return result;
+		}
+
+		public static void applyToMatching(List<Person> list, Predicate<Person> rule, Consumer<Person> action) {
+			for (Person p : list) {
+				if (rule.test(p)) {
+					action.accept(p);
+				}
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		List<Person> people = List.of(
+				new Person("Amina", 22, "Stockholm", true),
+				new Person("Erik", 17, "Uppsala", true),
+				new Person("Noah", 34, "Stockholm", false),
+				new Person("Sara", 29, "Gothenburg", true),
+				new Person("Lina", 41, "Malmö", false),
+				new Person("Omar", 19, "Stockholm", true)
+		);
+
+		System.out.println("--- Core Tasks ---");
+
+		PersonRule activeRule = person -> person.isActive();
+		PersonRule adultRule = person -> person.getAge() >= 18;
+		PersonRule stockholmRule = person -> "Stockholm".equalsIgnoreCase(person.getCity());
+
+		PersonAction printName = person -> System.out.println(person.getName());
+		PersonAction sendEmail = person -> System.out.println("Send email to " + person.getName());
+
+		// Testing custom filter
+		List<Person> stockholmResidents = filterPeople(people, stockholmRule);
+		System.out.println("Stockholm Residents:");
+		for (Person p : stockholmResidents) {
+			printName.execute(p);
+		}
+
+		System.out.println("\n--- Optional Tasks (Composition & Predicate/Consumer) ---");
+
+		Predicate<Person> isActive = Person::isActive;
+		Predicate<Person> isAdult = p -> p.getAge() >= 18;
+		Predicate<Person> livesInStockholm = p -> "Stockholm".equalsIgnoreCase(p.getCity());
+
+		Predicate<Person> activeAndAdult = isActive.and(isAdult);
+		Predicate<Person> adultOrLivesInStockholm = isAdult.or(livesInStockholm);
+		Predicate<Person> notActive = isActive.negate();
+
+		Consumer<Person> emailConsumer = p -> System.out.println("Send email to " + p.getName());
+
+		System.out.println("Active and Adult individuals:");
+		List<Person> filtered = PersonProcessor.findPeople(people, activeAndAdult);
+		filtered.forEach(System.out::println);
+
+		System.out.println("\nSending emails to adults or Stockholm residents:");
+		PersonProcessor.applyToMatching(people, adultOrLivesInStockholm, emailConsumer);
+	}
+}
+
