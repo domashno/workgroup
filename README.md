@@ -5,3 +5,4 @@ A dedicated repository for archiving coding workshops, hands-on tutorials, and p
 [Week 45 Exercises 2&3&4](/week45_exercises.md)  
 [Week 45 Lexicon Vending Machine App](/VendingMachine)  
 [Week 45 Workshop Report](/week_45_workshop_report.md) (Ezhilarasi Ramachandiran)  
+[Week 46 Exercise - Functional Programming and Stream API](/Functional%20Programming%20and%20Stream%20API)  
