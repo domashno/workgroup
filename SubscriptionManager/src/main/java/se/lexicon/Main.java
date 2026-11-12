@@ -1,17 +1,46 @@
 package se.lexicon;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-	static void main() {
-		//TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-		// to see how IntelliJ IDEA suggests fixing it.
-		IO.println(String.format("Hello and welcome!"));
+import java.util.List;
 
-		for (int i = 1; i <= 5; i++) {
-			//TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-			// for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-			IO.println("i = " + i);
-		}
+public class Main {
+
+	public static void main(String[] args) {
+
+		SubscriberDAO dao = new SubscriberDAO();
+		SubscriberProcessor processor = new SubscriberProcessor();
+
+		dao.save(new Subscriber(1, "alice@example.com", Plan.PRO, true, 6));
+		dao.save(new Subscriber(2, "bob@example.com", Plan.BASIC, true, 1));
+		dao.save(new Subscriber(3, "carol@example.com", Plan.FREE, false, 0));
+		dao.save(new Subscriber(4, "dave@example.com", Plan.BASIC, true, 0));
+		dao.save(new Subscriber(5, "eve@example.com", Plan.PRO, false, 1));
+
+		List<Subscriber> subscriberList = dao.findAll();
+
+		System.out.println("ALL SUBSCRIBERS:");
+		subscriberList.forEach(System.out::println);
+
+		System.out.println("\nACTIVE SUBSCRIBERS:");
+		subscriberList.stream().filter(Subscriber::isActive).forEach(System.out::println);
+
+		System.out.println("\nEXPIRING SUBSCRIPTIONS:");
+		subscriberList.stream().filter(s -> s.getMonthsRemaining() <= 1).forEach(System.out::println);
+
+		System.out.println("\nACTIVE AND EXPIRING SUBSCRIBERS:");
+		subscriberList.stream().filter(s -> s.isActive() && s.getMonthsRemaining() <= 1).forEach(System.out::println);
+
+		System.out.println("\nPRO SUBSCRIBERS:");
+		subscriberList.stream().filter(s -> s.getPlan() == Plan.PRO).forEach(System.out::println);
+
+		System.out.println("\nPAYING SUBSCRIBERS:");
+		subscriberList.stream().filter(s -> s.getPlan() != Plan.FREE).forEach(System.out::println);
+
+
+
+
+		System.out.println("\n========== FIND SUBSCRIBERS DEMONSTRATION ==========");
+
+
 	}
 }
+
