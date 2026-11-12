@@ -12,7 +12,14 @@ public class SubscriberDao {
 
     // Save a subscriber
     public void save(Subscriber subscriber) {
-        subscribers.add(subscriber);
+        // Update if ID already exists, otherwise add new
+        findById(subscriber.getId()).ifPresentOrElse(
+                existing -> {
+                    int index = subscribers.indexOf(existing);
+                    subscribers.set(index, subscriber);
+                },
+                () -> subscribers.add(subscriber)
+        );
     }
 
     // Get all subscribers
