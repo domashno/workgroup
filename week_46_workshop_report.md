@@ -62,4 +62,4 @@ Overall, our goal is to combine our individual contributions into one working ap
 
 ---
 
-[workgroup/SubscriptionManager at main · domashno/workgroup](https://github.com)
+[workgroup/SubscriptionManager at main · domashno/workgroup](/SubscriptionManager)
