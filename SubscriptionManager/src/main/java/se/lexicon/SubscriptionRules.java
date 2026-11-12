@@ -45,8 +45,11 @@ public class SubscriptionRules {
 
     //Rule 6:Extend Subscription
     //Increases the remaining subscription period for a subscriber.
-    // Example: increase by 1 month
-    public static SubscriberAction extendSubscription = s -> s.setMonthsRemaining(s.getMonthsRemaining() + 1);
+    // Extends the subscription by the specified number of months
+    public static SubscriberAction extendSubscription(int months) {
+      return  s -> s.setMonthsRemaining(s.getMonthsRemaining() + months);
+
+    }
 
     // Rule 7: Deactivate Subscriber
     //Marks a subscriber as inactive.
