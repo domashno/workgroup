@@ -6,6 +6,6 @@ A dedicated repository for archiving coding workshops, hands-on tutorials, and p
 [Week 45 Lexicon Vending Machine App](/VendingMachine)  
 [Week 45 Workshop Report](/week_45_workshop_report.md) (Ezhilarasi Ramachandiran)  
 [Week 46 Exercise - Functional Programming and Stream API](/Exercises/Functional%20Programming%20and%20Stream%20API)  
-[Week 46 Workgroup - SubscriptionManager App](/Exercises/SubscriptionManager)  
+[Week 46 Workgroup - SubscriptionManager App](/SubscriptionManager)  
 [Week 46 Workshop Report](/week_46_workshop_report.md) (Soraya Sharifi)  
 
