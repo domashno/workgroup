@@ -6,7 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		SubscriberDAO dao = new SubscriberDAO();
+		SubscriberDao dao = new SubscriberDao();
 		SubscriberProcessor processor = new SubscriberProcessor();
 
 		dao.save(new Subscriber(1, "alice@example.com", Plan.PRO, true, 6));
@@ -85,7 +85,7 @@ public class Main {
 		processor.applyToMatching(
 				subscriberList,
 				SubscriptionRules.activeAndExpiring,
-				SubscriptionRules.extendSubscription
+				SubscriptionRules.extendSubscription(1)
 		);
 
 		subscriberList.forEach(System.out::println);
