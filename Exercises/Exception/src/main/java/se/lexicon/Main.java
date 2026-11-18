@@ -1,4 +1,6 @@
 package se.lexicon;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -119,6 +121,21 @@ public class Main {
 			manager.findName("Charlie");
 		} catch (NameNotFoundException e) {
 			System.out.println("Search Error: " + e.getMessage());
+		}
+		//Exercise 8
+		System.out.println("Exercise 8: Try-with-Resources");
+		String fileName = "output.txt";
+		String content = "Hello! This text was safely written using Java try-with-resources.";
+
+		// BufferedWriter and FileWriter implement AutoCloseable
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+			writer.write(content);
+			writer.newLine();
+			writer.write("Resources will close automatically when this block exits.");
+
+			System.out.println("Successfully wrote text to " + fileName);
+		} catch (IOException e) {
+			System.out.println("An error occurred while writing to the file: " + e.getMessage());
 		}
 	}
 	public static void validateEmail(String email) {
