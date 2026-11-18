@@ -27,6 +27,8 @@ public class Main {
 			System.out.println("Result: " + result);
 		} catch (ArithmeticException e) {
 			System.out.println("Error: Cannot divide by zero.");
+		} finally {
+			System.out.println("Exercise 5: finally Block");
 		}
 		//Exercise 2
 		System.out.println("Exercise 2: Multiple Exception Types");
