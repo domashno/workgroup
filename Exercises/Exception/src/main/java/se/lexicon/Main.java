@@ -2,7 +2,10 @@ package se.lexicon;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
+import se.lexicon.exception.DuplicateNameException;
 import se.lexicon.exception.InsufficientBalanceException;
+import se.lexicon.exception.NameManager;
+import se.lexicon.exception.NameNotFoundException;
 import se.lexicon.exception.OutOfRangeException;
 import se.lexicon.model.BankAccount;
 import java.io.BufferedReader;
@@ -95,6 +98,27 @@ public class Main {
 			} catch (IllegalArgumentException e) {
 				System.out.println("Validation Error for '" + email + "': " + e.getMessage());
 			}
+		}
+		//Exercise 7
+		System.out.println("Exercise 7: Custom Exceptions for List Operations");
+		NameManager manager = new NameManager();
+
+		// Test adding names
+		try {
+			manager.addName("Alice");
+			manager.addName("Bob");
+			manager.addName("Alice");
+		} catch (DuplicateNameException e) {
+			System.out.println("Add Error: " + e.getMessage());
+		}
+
+		try {
+			String found = manager.findName("Bob");
+			System.out.println("Found: " + found);
+
+			manager.findName("Charlie");
+		} catch (NameNotFoundException e) {
+			System.out.println("Search Error: " + e.getMessage());
 		}
 	}
 	public static void validateEmail(String email) {
