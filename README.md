@@ -8,4 +8,5 @@ A dedicated repository for archiving coding workshops, hands-on tutorials, and p
 [Week 46 Exercise - Functional Programming and Stream API](/Exercises/Functional%20Programming%20and%20Stream%20API)  
 [Week 46 Workgroup - SubscriptionManager App](/SubscriptionManager)  
 [Week 46 Workshop Report](/week_46_workshop_report.md) (Soraya Sharifi)  
+[Week 46 Exercise - Exception](/Exercises/Exception)  
 
