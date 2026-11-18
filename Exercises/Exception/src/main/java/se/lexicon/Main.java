@@ -80,6 +80,33 @@ public class Main {
 		} catch (IOException e) {
 			System.out.println("Error: A problem occurred while reading the file: " + e.getMessage());
 		}
+		//Exercise 6
+		System.out.println("Exercise 6: Throwing Exceptions");
+		String[] testEmails = {
+				"user@example.com",
+				"invalid-email.com",
+				"user@.com",
+				""
+		};
+		for (String email : testEmails) {
+			try {
+				validateEmail(email);
+				System.out.println("Valid email: " + email);
+			} catch (IllegalArgumentException e) {
+				System.out.println("Validation Error for '" + email + "': " + e.getMessage());
+			}
+		}
+	}
+	public static void validateEmail(String email) {
+		if (email == null || email.trim().isEmpty()) {
+			throw new IllegalArgumentException("Email address cannot be null or empty.");
+		}
+
+		String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+
+		if (!email.matches(emailRegex)) {
+			throw new IllegalArgumentException("Invalid email format. Expected format: user@domain.com");
+		}
 	}
 	public static int getNumberInRange(Scanner scanner, int min, int max)
 			throws InputMismatchException, OutOfRangeException {
