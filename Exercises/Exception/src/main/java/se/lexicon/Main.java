@@ -5,6 +5,12 @@ import java.util.InputMismatchException;
 import se.lexicon.exception.InsufficientBalanceException;
 import se.lexicon.exception.OutOfRangeException;
 import se.lexicon.model.BankAccount;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
 	public static void main(String[] args) {
@@ -48,6 +54,30 @@ public class Main {
 			System.out.println("Transaction Error: " + e.getMessage());
 		}
 		System.out.println("Final Balance: $" + account.getBalance());
+		//Exercise 4
+		System.out.println("Exercise 4: Nested try-catch Blocks");
+		Path filePath = Paths.get("a-file.txt");
+
+		try (BufferedReader reader = Files.newBufferedReader(filePath)) {
+			String line;
+			int lineNumber = 0;
+
+			while ((line = reader.readLine()) != null) {
+				lineNumber++;
+
+				try {
+					int number = Integer.parseInt(line.trim());
+					System.out.println("Line " + lineNumber + ": Parsed integer = " + number);
+				} catch (NumberFormatException e) {
+					System.out.println("Line " + lineNumber + ": Skipping invalid integer ('" + line + "').");
+				}
+			}
+
+		} catch (NoSuchFileException e) {
+			System.out.println("Error: The file '" + e.getFile() + "' was not found.");
+		} catch (IOException e) {
+			System.out.println("Error: A problem occurred while reading the file: " + e.getMessage());
+		}
 	}
 	public static int getNumberInRange(Scanner scanner, int min, int max)
 			throws InputMismatchException, OutOfRangeException {
