@@ -28,7 +28,25 @@ public class ContactController {
 
                 switch (choice.trim()) {
 
-                 /* TODO*/
+                    case "1":
+                        addContact();
+                        break;
+
+                    case "2":
+                        displayContacts();
+                        break;
+
+                    case "3":
+                        searchContact();
+                        break;
+
+                    case "4":
+                        running = false;
+                        contactView.displayMessage("Application closed. Goodbye!");
+                        break;
+
+                    default:
+                        contactView.displayError("Invalid menu option.");
                 }
 
             } catch (Exception e) {
