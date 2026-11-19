@@ -9,4 +9,5 @@ A dedicated repository for archiving coding workshops, hands-on tutorials, and p
 [Week 46 Workgroup - SubscriptionManager App](/SubscriptionManager)  
 [Week 46 Workshop Report](/week_46_workshop_report.md) (Soraya Sharifi)  
 [Week 47 Exercise - Exception](/Exercises/Exception)  
+[Week 47 Workgroup - Contact App](/ContactApp)  
 [Week 47 Workshop Report](/week_47_workshop_report.md)  
