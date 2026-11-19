@@ -18,6 +18,19 @@ public class FileContactDAOImpl implements ContactDAO{
 
     public FileContactDAOImpl(Path filePath) throws ContactStorageException {
         this.filePath = filePath;
+        initializeFile();
+    }
+    private void initializeFile() throws ContactStorageException {
+        try {
+            if (filePath.getParent() != null) {
+                Files.createDirectories(filePath.getParent());
+            }
+            if (!Files.exists(filePath)) {
+                Files.createFile(filePath);
+            }
+        } catch (IOException e) {
+            throw new ContactStorageException("Failed to initialize contact storage file.", e);
+        }
     }
 
     @Override
