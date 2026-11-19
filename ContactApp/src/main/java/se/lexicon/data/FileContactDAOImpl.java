@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class FileContactDAOImpl implements ContactDAO{
     //-Path filePath
     private final Path filePath;
 
-    public FileContactDAOImpl(Path filePath) {
+    public FileContactDAOImpl(Path filePath) throws ContactStorageException {
         this.filePath = filePath;
     }
 
@@ -79,7 +80,7 @@ public class FileContactDAOImpl implements ContactDAO{
             return findAll().stream()
                             .filter(c -> c.getName().equalsIgnoreCase(name))
                             .findFirst()
-                             .orElse(null);;
+                             .orElse(null);
     }
 
 

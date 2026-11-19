@@ -33,7 +33,7 @@ public class ContactController {
 
             } catch (Exception e) {
                 ExceptionHandler.handle(e);
-                contactView.displayError(ExceptionHandler.getMessage(e)
+                contactView.displayError(ExceptionHandler.handle(e)
                 );
             }
         }
